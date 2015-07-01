@@ -1,0 +1,39 @@
+<html ng-app="classFinder">
+  <head>
+    <meta charset="utf-8">
+    <title>YI Class Finder</title>
+
+    <!-- LIBARIES / FRAMEWORKS -->
+    <!-- jQuery via CDN -->
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <!-- Bootstrap via CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!-- Angular via CDN -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.1/angular.min.js"></script>
+
+    <!-- Class Finder App -->
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/classes.js"></script>
+    <script src="js/app.js"></script>
+
+  </head>
+  <body ng-controller="SearchCtrl">
+    Search:<input ng-model="query" class="form-control" type="text"/>
+    <table class="table table-striped">
+      <tbody class="table-striped">
+        <tr>
+          <th>Thumb</th>
+          <th>Title</th>
+          <th>Author</th>
+        </tr>
+        <tr ng-repeat="class in classes | filter:query">
+          <td><img ng-src="{{class.image}}" width="100"></td>
+          <td><a href="http://yogainternational.com{{class.url}}">{{class.title}}</a></td>
+          <td><a href="http://yogainternational.com/profile/{{class.authorId}}">{{class.author}}</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
