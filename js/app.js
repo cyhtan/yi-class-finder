@@ -18,9 +18,20 @@ classFinder.controller('SearchCtrl', ['$scope', '$http', function(scope, http) {
 
     scope.classes = classes;
 
+
+    scope.activeFilters = [];
+    scope.addFilter = function (filter) {
+        scope.activeFilters.push(filter);
+        // console.log(scope.activeFilters);
+    };
+    scope.removeFilter = function (index) {
+        scope.activeFilters.splice(index,1);
+    };
+
+
     // TODO: Generate dynamically from JSON
     scope.filterByLevel = ['Advanced','All Levels','Beginner','Intermediate','Restorative'];
-    scope.filterByDuration = ['15 min','30 min','45 min','60 min','75 min','90 min'];
+    scope.filterByDuration = ['15-min','30-min','45-min','60-min','75-min','90-min'];
     scope.filterByInstructor = ['Shari Friedrichsen','Luke Ketterhagen'];
     scope.filterByFocus = ['Prenatal','Strength','Gentle'];
 
