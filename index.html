@@ -20,7 +20,7 @@
 
   </head>
   <body ng-controller="SearchCtrl">
-    Search:<input ng-model="query" class="form-control" type="text"/>
+    Search:<input ng-model="searchText" class="form-control" type="text"/>
     <table class="table table-striped">
       <tbody class="table-striped">
         <tr>
@@ -28,7 +28,7 @@
           <th>Title</th>
           <th>Author</th>
         </tr>
-        <tr ng-repeat="class in classes | filter:query">
+        <tr ng-repeat="class in classes | filter:searchFilter">
           <td><img ng-src="{{class.image}}" width="100"></td>
           <td><a href="http://yogainternational.com{{class.url}}">{{class.title}}</a></td>
           <td><a href="http://yogainternational.com/profile/{{class.authorId}}">{{class.author}}</a></td>

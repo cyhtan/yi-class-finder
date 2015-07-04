@@ -18,5 +18,11 @@ classFinder.controller('SearchCtrl', ['$scope', '$http', function(scope, http) {
 
     scope.classes = classes;
 
+    // Custom filter, checking only .title & .author properties.
+    scope.searchFilter = function (obj) {
+        var re = new RegExp(scope.searchText, 'i');
+        return !scope.searchText || re.test(obj.title) || re.test(obj.author);
+    };
+
 
 }]);
