@@ -1,8 +1,8 @@
 <html ng-app="classFinder">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <title>YI Class Finder</title>
-
     <!-- LIBARIES / FRAMEWORKS -->
     <!-- jQuery via CDN -->
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -12,28 +12,30 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <!-- Angular via CDN -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.1/angular.min.js"></script>
-
     <!-- Class Finder App -->
     <link rel="stylesheet" href="css/styles.css">
     <script src="js/classes.js"></script>
     <script src="js/app.js"></script>
+</head>
 
-  </head>
-  <body ng-controller="SearchCtrl">
-    Search:<input ng-model="searchText" class="form-control" type="text"/>
+<body ng-controller="SearchCtrl">
+    <nav>
+        <input ng-model="searchText" class="form-control" type="text" placeholder="Search title or author:" />
+    </nav>
     <table class="table table-striped">
-      <tbody class="table-striped">
-        <tr>
-          <th>Thumb</th>
-          <th>Title</th>
-          <th>Author</th>
-        </tr>
-        <tr ng-repeat="class in classes | filter:searchFilter">
-          <td><img ng-src="{{class.image}}" width="100"></td>
-          <td><a href="http://yogainternational.com{{class.url}}">{{class.title}}</a></td>
-          <td><a href="http://yogainternational.com/profile/{{class.authorId}}">{{class.author}}</a></td>
-        </tr>
-      </tbody>
+        <tbody class="table-striped">
+            <tr>
+                <th>Thumb</th>
+                <th>Title</th>
+                <th>Author</th>
+            </tr>
+            <tr ng-repeat="class in classes | filter:searchFilter">
+                <td><img ng-src="{{class.image}}" class="class-thumb"></td>
+                <td><a href="http://yogainternational.com{{class.url}}">{{class.title}}</a></td>
+                <td><a href="http://yogainternational.com/profile/{{class.authorId}}">{{class.author}}</a></td>
+            </tr>
+        </tbody>
     </table>
-  </body>
+</body>
+
 </html>
