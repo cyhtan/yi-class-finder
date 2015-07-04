@@ -9,6 +9,10 @@ nav {
     margin-bottom: 15px;
 }
 
+div.btn-group {
+    margin: 15px 5px 15px 0px;
+}
+
 img.class-thumb {
     width: 100;
 }

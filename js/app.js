@@ -1,5 +1,5 @@
 
-var classFinder = angular.module('classFinder', []);
+var classFinder = angular.module('classFinder', ['ui.bootstrap']);
 
 classFinder.controller('SearchCtrl', ['$scope', '$http', function(scope, http) {
 
@@ -17,6 +17,12 @@ classFinder.controller('SearchCtrl', ['$scope', '$http', function(scope, http) {
     */
 
     scope.classes = classes;
+
+    // TODO: Generate dynamically from JSON
+    scope.filterByLevel = ['Advanced','All Levels','Beginner','Intermediate','Restorative'];
+    scope.filterByDuration = ['15 min','30 min','45 min','60 min','75 min','90 min'];
+    scope.filterByInstructor = ['Shari Friedrichsen','Luke Ketterhagen'];
+    scope.filterByFocus = ['Prenatal','Strength','Gentle'];
 
     // Custom filter, checking only .title & .author properties.
     scope.searchFilter = function (obj) {

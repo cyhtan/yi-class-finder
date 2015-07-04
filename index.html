@@ -11,7 +11,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <!-- Angular via CDN -->
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.1/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.1/angular.min.js"></script>
+    <!-- Angular UI Boostrap https://github.com/angular-ui/bootstrap -->
+    <script src="lib/ui-bootstrap-0.13.0.min.js"></script>
+
     <!-- Class Finder App -->
     <link rel="stylesheet" href="css/styles.css">
     <script src="js/classes.js"></script>
@@ -19,9 +22,50 @@
 </head>
 
 <body ng-controller="SearchCtrl">
+
     <nav>
-        <input ng-model="searchText" class="form-control" type="text" placeholder="Search title or author:" />
+
+      <input ng-model="searchText" class="form-control" type="text" placeholder="Search classes" />
+
+
+      <div class="btn-group" dropdown is-open="status.isopen">
+        <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+            Find by Level <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li ng-repeat="level in filterByLevel">
+            <a href="#">{{level}}</a>
+          </li>
+          <!-- 
+          <li class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+          -->
+        </ul>
+      </div> 
+
+      <!-- Alternative Button Implementation 
+      <span class="dropdown" dropdown on-toggle="toggled(open)">
+        <a href class="dropdown-toggle" dropdown-toggle>
+          Find by Level
+        </a>
+        <ul class="dropdown-menu">
+          <li ng-repeat="level in filterByLevel">
+            <a href>{{level}}</a>
+          </li>
+        </ul>
+      </span>
+       -->
     </nav>
+  
+
+
+    
+
+
+
+
+
+    <!-- TODO: reorganize layout to contain tags/thumb/shortdescription/title all under one <th> -->
     <table class="table table-striped">
         <tbody class="table-striped">
             <tr>
