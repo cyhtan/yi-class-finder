@@ -2,22 +2,11 @@
 var classFinder = angular.module('classFinder', ['ui.bootstrap']);
 
 classFinder.controller('SearchCtrl', ['$scope', '$http', function(scope, http) {
-
     /*
-
-    AJAX Not Working
-
-    Logs Error:
-    XMLHttpRequest cannot load https://yogainternational.com/json/classes. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'null' is therefore not allowed access.
-  
-    http.get('https://yogainternational.com/json/classes').success(function(data) {
-      scope.classes = data;
-    });
-
+    AJAX Not Working Logs Error: XMLHttpRequest cannot load https://yogainternational.com/json/classes. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'null' is therefore not allowed access.
+    http.get('https://yogainternational.com/json/classes').success(function(data) { scope.classes = data; });
     */
-
     scope.classes = classes;
-
 
     scope.activeFilters = [];
     scope.addFilter = function (filter) {
@@ -27,7 +16,6 @@ classFinder.controller('SearchCtrl', ['$scope', '$http', function(scope, http) {
     scope.removeFilter = function (index) {
         scope.activeFilters.splice(index,1);
     };
-
 
     // TODO: Generate dynamically from JSON
     scope.filterByLevel = ['Advanced','All Levels','Beginner','Intermediate','Restorative'];
@@ -41,5 +29,23 @@ classFinder.controller('SearchCtrl', ['$scope', '$http', function(scope, http) {
         return !scope.searchText || re.test(obj.title) || re.test(obj.author);
     };
 
+    scope.durationFilter = function (obj) {
+        if ( !scope.activeFilters.length ) { return true; }
+        for (var i = 0; i < scope.activeFilters.length; i++) {
+            if ( obj.duration[0] === scope.activeFilters[i] ) { return true; }    
+        }
+        return false;
+    };
 
 }]);
+
+/*
+classFinder.filter('searchFilter', function() {
+    return function (obj) {
+        var re = new RegExp($scope.searchText, 'i');
+        return !$scope.searchText || re.test(obj.title) || re.test(obj.author);
+    };
+});
+*/
+
+

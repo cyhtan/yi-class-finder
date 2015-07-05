@@ -27,7 +27,6 @@
 
       <input ng-model="searchText" class="form-control" type="text" placeholder="Search classes" />
 
-
       <div class="btn-group" dropdown is-open="status.isopen">
         <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
             Find by Duration <span class="caret"></span>
@@ -36,10 +35,6 @@
           <li ng-repeat="duration in filterByDuration">
             <a ng-click="addFilter( duration )">{{duration}}</a>
           </li>
-          <!-- 
-          <li class="divider"></li>
-          <li><a href="#">Separated link</a></li>
-          -->
         </ul>
       </div>
       
@@ -50,42 +45,20 @@
         </span>
       </div>
 
-
-
-      <!-- Alternative Button Implementation 
-      <span class="dropdown" dropdown on-toggle="toggled(open)">
-        <a href class="dropdown-toggle" dropdown-toggle>
-          Find by Level
-        </a>
-        <ul class="dropdown-menu">
-          <li ng-repeat="level in filterByLevel">
-            <a href>{{level}}</a>
-          </li>
-        </ul>
-      </span>
-       -->
     </nav>
   
-
-
-    
-
-
-
-
-
-    <!-- TODO: reorganize layout to contain tags/thumb/shortdescription/title all under one <th> -->
+    <!-- TODO: reorganize layout to contain tags/thumb/shortdescription/title all under one <th>, in one <td> -->
     <table class="table table-striped">
         <tbody class="table-striped">
             <tr>
-                <th>Thumb</th>
-                <th>Title</th>
-                <th>Author</th>
+              <th>Thumb</th>
+              <th>Title</th>
+              <th>Author</th>
             </tr>
-            <tr ng-repeat="class in classes | filter:searchFilter">
-                <td><img ng-src="{{class.image}}" class="class-thumb"></td>
-                <td><a href="http://yogainternational.com{{class.url}}">{{class.title}}</a></td>
-                <td><a href="http://yogainternational.com/profile/{{class.authorId}}">{{class.author}}</a></td>
+            <tr ng-repeat="class in classes | filter:searchFilter | filter:durationFilter">
+              <td><img ng-src="{{class.image}}" class="class-thumb"></td>
+              <td><a href="http://yogainternational.com{{class.url}}">{{class.title}}</a></td>
+              <td><a href="http://yogainternational.com/profile/{{class.authorId}}">{{class.author}}</a></td>
             </tr>
         </tbody>
     </table>
