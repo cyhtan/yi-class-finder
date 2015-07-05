@@ -8,20 +8,32 @@ classFinder.controller('SearchCtrl', ['$scope', '$http', function(scope, http) {
     */
     scope.classes = classes;
 
-    scope.activeFilters = [];
-    scope.addFilter = function (filter) {
-        scope.activeFilters.push(filter);
+    // TODO: Dynamically generate tags from JSON?
+    scope.dropdowns = [
+                        {name:'Duration',        menuOptions:['15-min','30-min','45-min','60-min','75-min','90-min']},
+                        {name:'Level',           menuOptions:['Advanced','All Levels','Beginner','Intermediate','Restorative']},
+                        {name:'Instructor',      menuOptions:['Shari Friedrichsen','Luke Ketterhagen']},
+                        {name:'Focus',           menuOptions:['Prenatal','Strength','Gentle']}
+                      ];
+
+    scope.activeFilters = {
+                            Duration:  [],
+                            Level:     [],
+                            Instructor:[],
+                            Focus:     []
+                          };
+
+    scope.addFilter = function (filter, category) {
+        if ( scope.activeFilters[category].indexOf(filter) === -1 ) {
+            scope.activeFilters[category].push(filter);
+        }
         // console.log(scope.activeFilters);
     };
-    scope.removeFilter = function (index) {
-        scope.activeFilters.splice(index,1);
+    scope.removeFilter = function (index, category) {
+        scope.activeFilters[category].splice(index,1);
     };
 
-    // TODO: Generate dynamically from JSON
-    scope.filterByLevel = ['Advanced','All Levels','Beginner','Intermediate','Restorative'];
-    scope.filterByDuration = ['15-min','30-min','45-min','60-min','75-min','90-min'];
-    scope.filterByInstructor = ['Shari Friedrichsen','Luke Ketterhagen'];
-    scope.filterByFocus = ['Prenatal','Strength','Gentle'];
+   
 
     // Custom filter, checking only .title & .author properties.
     scope.searchFilter = function (obj) {
@@ -30,9 +42,35 @@ classFinder.controller('SearchCtrl', ['$scope', '$http', function(scope, http) {
     };
 
     scope.durationFilter = function (obj) {
-        if ( !scope.activeFilters.length ) { return true; }
-        for (var i = 0; i < scope.activeFilters.length; i++) {
-            if ( obj.duration[0] === scope.activeFilters[i] ) { return true; }    
+        if ( !scope.activeFilters.Duration.length ) { return true; }
+        for (var i = 0; i < scope.activeFilters.Duration.length; i++) {
+            if ( obj.duration[0] === scope.activeFilters.Duration[i] ) { return true; }    
+        }
+        return false;
+    };
+
+    scope.levelFilter = function (obj) {
+        if ( !scope.activeFilters.Level.length ) { return true; }
+        for (var i = 0; i < scope.activeFilters.Level.length; i++) {
+            if ( obj.level[0] === scope.activeFilters.Level[i] ) { return true; }    
+        }
+        return false;
+    };
+
+    scope.instructorFilter = function (obj) {
+        if ( !scope.activeFilters.Instructor.length ) { return true; }
+        for (var i = 0; i < scope.activeFilters.Instructor.length; i++) {
+            if ( obj.author === scope.activeFilters.Instructor[i] ) { return true; }    
+        }
+        return false;
+    };
+
+    scope.focusFilter = function (obj) {
+        if ( !scope.activeFilters.Focus.length ) { return true; }
+        for (var i = 0; i < scope.activeFilters.Focus.length; i++) {
+            for (var j = 0; j < obj.focus.length; j++){
+                if ( obj.focus[0] === scope.activeFilters.Focus[i] ) { return true; }    
+            }
         }
         return false;
     };
