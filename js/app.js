@@ -11,7 +11,7 @@ classFinder.controller('SearchCtrl', ['$scope', '$http', function(scope, http) {
     // TODO: Dynamically generate tags from JSON?
     scope.dropdowns = [
                         {name:'Duration',        menuOptions:['15-min','30-min','45-min','60-min','75-min','90-min']},
-                        {name:'Level',           menuOptions:['Advanced','All Levels','Beginner','Intermediate','Restorative']},
+                        {name:'Level',           menuOptions:['Advanced','All-Levels','Beginners','Intermediate','Restorative']},
                         {name:'Instructor',      menuOptions:['Shari Friedrichsen','Luke Ketterhagen']},
                         {name:'Focus',           menuOptions:['Prenatal','Strength','Gentle']}
                       ];
@@ -24,10 +24,10 @@ classFinder.controller('SearchCtrl', ['$scope', '$http', function(scope, http) {
                           };
 
     scope.addFilter = function (filter, category) {
+        // Don't add the filter if it already exists
         if ( scope.activeFilters[category].indexOf(filter) === -1 ) {
             scope.activeFilters[category].push(filter);
         }
-        // console.log(scope.activeFilters);
     };
     scope.removeFilter = function (index, category) {
         scope.activeFilters[category].splice(index,1);
@@ -52,7 +52,7 @@ classFinder.controller('SearchCtrl', ['$scope', '$http', function(scope, http) {
     scope.levelFilter = function (obj) {
         if ( !scope.activeFilters.Level.length ) { return true; }
         for (var i = 0; i < scope.activeFilters.Level.length; i++) {
-            if ( obj.level[0] === scope.activeFilters.Level[i] ) { return true; }    
+            if ( obj.level[0] === scope.activeFilters.Level[i].toLowerCase() ) { return true; }    
         }
         return false;
     };
