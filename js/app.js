@@ -8,12 +8,12 @@ classFinder.controller('SearchCtrl', ['$scope', '$http', function(scope, http) {
     */
     scope.classes = classes;
 
-    // TODO: Dynamically generate tags from JSON?
+    // TODO: Dynamically generate tags from JSON? _.uniq  ...  or better to perform and cache on server?
     scope.dropdowns = [
                         {name:'Duration',        menuOptions:['15-min','30-min','45-min','60-min','75-min','90-min']},
                         {name:'Level',           menuOptions:['Advanced','All-Levels','Beginners','Intermediate','Restorative']},
                         {name:'Instructor',      menuOptions:['Shari Friedrichsen','Luke Ketterhagen']},
-                        {name:'Focus',           menuOptions:['Prenatal','Strength','Gentle']}
+                        {name:'Focus',           menuOptions:["deeper-dimensions", "prana-vayus", "calming", "gentle", "breath-and-pranayama", "core", "hip-opening", "twists", "vinyasa", "forward-bends", "strength", "back-support", "healing", "yoga-therapy-yoga-classes", "stress-relief", "energize", "backbends", "inversions", "arm-balances", "prenatal", "bandhas", "pm", "peak-pose", "for-men", "meditation-preparation", "for-women", "5-elements", "chakras-yoga-classes", "alignment", "ayurveda", "am"]}
                       ];
 
     scope.activeFilters = {
@@ -33,13 +33,12 @@ classFinder.controller('SearchCtrl', ['$scope', '$http', function(scope, http) {
         scope.activeFilters[category].splice(index,1);
     };
 
-   
-
     // Custom filter, checking only .title & .author properties.
     scope.searchFilter = function (obj) {
         var re = new RegExp(scope.searchText, 'i');
         return !scope.searchText || re.test(obj.title) || re.test(obj.author);
     };
+
 
     scope.durationFilter = function (obj) {
         if ( !scope.activeFilters.Duration.length ) { return true; }
@@ -69,7 +68,7 @@ classFinder.controller('SearchCtrl', ['$scope', '$http', function(scope, http) {
         if ( !scope.activeFilters.Focus.length ) { return true; }
         for (var i = 0; i < scope.activeFilters.Focus.length; i++) {
             for (var j = 0; j < obj.focus.length; j++){
-                if ( obj.focus[0] === scope.activeFilters.Focus[i] ) { return true; }    
+                if ( obj.focus[j] === scope.activeFilters.Focus[i].toLowerCase() ) { return true; }    
             }
         }
         return false;
