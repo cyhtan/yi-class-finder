@@ -1,6 +1,5 @@
 /*
     TODO: 
-        reset button
         exclusive filters
         dynamically generate filters (+ USE LOCAL STORAGE TO CACHE?cache to local storage w/ a time stamp, and if < 1 day elapsed, recreate )
 
@@ -46,6 +45,12 @@ classFinder.controller('SearchCtrl', ['$scope', '$http', function(scope, http) {
     scope.removeFilter = function (index, category) {
         scope.activeFilters[category].splice(index,1);
     };
+    scope.resetFilters = function () {
+        // Delete all active filters
+        for (var prop in scope.activeFilters) {
+            scope.activeFilters[prop] = [];
+        }
+    }
 
     // Custom filter, checking only .title & .author properties.
     scope.searchFilter = function (obj) {
