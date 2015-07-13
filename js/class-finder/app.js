@@ -1,3 +1,18 @@
+/*
+    TODO: 
+        reset button
+        exclusive filters
+        dynamically generate filters (+ USE LOCAL STORAGE TO CACHE?cache to local storage w/ a time stamp, and if < 1 day elapsed, recreate )
+
+        # of results for each option
+        
+        elastic dropdowns
+
+        modularize under js/class-finder
+
+
+*/
+
 
 var classFinder = angular.module('classFinder', ['ui.bootstrap']);
 
@@ -8,7 +23,6 @@ classFinder.controller('SearchCtrl', ['$scope', '$http', function(scope, http) {
     */
     scope.classes = classes;
 
-    // TODO: Dynamically generate tags from JSON? _.uniq  ...  or better to perform and cache on server?
     scope.dropdowns = [
                         {name:'Duration',        menuOptions:['15-min','30-min','45-min','60-min','75-min','90-min']},
                         {name:'Level',           menuOptions:['Advanced','All-Levels','Beginners','Intermediate','Restorative']},
