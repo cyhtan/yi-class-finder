@@ -17,3 +17,6 @@ img.class-thumb {
     width: 100;
 }
 
+#btn-reset-filters {
+    background-color:rgba(176, 49, 98, 0.6);
+}

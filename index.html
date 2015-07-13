@@ -27,9 +27,11 @@
 <body ng-controller="SearchCtrl">
 
     <nav>
-
+  
+      <!-- Class Search -->
       <input ng-model="searchText" class="form-control" type="text" placeholder="Search classes" />
 
+      <!-- Filter Dropdown Menus -->
       <div ng-repeat="dropdown in dropdowns" class="btn-group" dropdown is-open="status.isopen">
         <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
             Find by {{dropdown.name}} <span class="caret"></span>
@@ -41,7 +43,9 @@
         </ul>
       </div>
       
+      <!-- Filter "Pills" -->
       <div>
+        <button id="btn-reset-filters" type="button" class="btn-secondary">Reset</button>
         <span ng-repeat="category in dropdowns">
           <span ng-repeat="filter in activeFilters[category.name]">
             <span>{{filter}}</span>
