@@ -67,7 +67,7 @@
               <th>Title</th>
               <th>Author</th>
             </tr>
-            <tr ng-repeat="class in classes | filter:searchFilter | filter:dropdownFilter">
+            <tr ng-repeat="class in classes | filter:filterSearch | filter:filterDropdown">
               <td><img ng-src="{{class.image}}" class="class-thumb"></td>
               <td><a href="http://yogainternational.com{{class.url}}">{{class.title}}</a></td>
               <td><a href="http://yogainternational.com/profile/{{class.authorId}}">{{class.author}}</a></td>

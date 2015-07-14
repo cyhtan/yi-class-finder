@@ -48,18 +48,12 @@ classFinder.controller('SearchCtrl', ['$scope', '$http', function (scope, http) 
             mapDropdownToClasses ('Instructor', 'author',   scope.classes[i]);
             mapDropdownToClasses ('Focus',      'focus',    scope.classes[i]);
         }
-
         // Remove duplicates
         for (var j = 0; j < scope.dropdowns.length; j++) {
             scope.dropdowns[j].menuOptions = _.uniq(scope.dropdowns[j].menuOptions)
         }
-        
-
-        console.log(scope.dropdowns);
     }
     scope.populateDropdownMenuOptions();
-
-
 
 
     scope.addFilter = function (filter, category) {
@@ -79,12 +73,12 @@ classFinder.controller('SearchCtrl', ['$scope', '$http', function (scope, http) 
     }
 
     // Custom filter, checking only .title & .author properties.
-    scope.searchFilter = function (obj) {
+    scope.filterSearch = function (obj) {
         var re = new RegExp(scope.searchText, 'i');
         return !scope.searchText || re.test(obj.title) || re.test(obj.author);
     };
 
-    scope.dropdownFilter = function (obj) {
+    scope.filterDropdown = function (obj) {
 
         function hasValues (arrayToCheck, values) {
             if ( ! Array.isArray(arrayToCheck) || ! Array.isArray(values) ) {
