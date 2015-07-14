@@ -38,7 +38,10 @@
         </button>
         <ul class="dropdown-menu" role="menu">
           <li ng-repeat="option in dropdown.menuOptions">
-            <a ng-click="addFilter( option, dropdown.name )">{{option}}</a>
+            <a ng-click="addFilter( option, dropdown.name )">
+              {{option}} 
+              <span class="filter-results-num">({{2}})</span>
+            </a>
           </li>
         </ul>
       </div>

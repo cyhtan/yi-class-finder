@@ -25,3 +25,7 @@ span.filter-pill {
     background-color: rgba(176, 49, 98, 0.6);
     margin: 5px;
 }
+
+span.filter-results-num{
+    color: red;
+}
