@@ -20,3 +20,8 @@ img.class-thumb {
 #btn-reset {
     background-color:rgba(176, 49, 98, 0.6);
 }
+
+span.filter-pill {
+    background-color: rgba(176, 49, 98, 0.6);
+    margin: 5px;
+}

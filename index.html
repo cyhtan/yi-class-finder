@@ -50,7 +50,7 @@
         <button id="btn-reset" ng-click="resetFilters()" type="button" class="btn-secondary">Reset</button>
 
         <span ng-repeat="category in dropdowns">
-          <span ng-repeat="filter in activeFilters[category.name]">
+          <span ng-repeat="filter in activeFilters[category.name]" class="filter-pill">
             <span>{{filter}}</span>
             <a ng-click="removeFilter( $index, category.name )">x</a>
           </span>
@@ -67,7 +67,7 @@
               <th>Title</th>
               <th>Author</th>
             </tr>
-            <tr ng-repeat="class in classes | filter:searchFilter | filter:durationFilter | filter:levelFilter | filter:instructorFilter | filter: focusFilter">
+            <tr ng-repeat="class in classes | filter:searchFilter | filter:dropdownFilter">
               <td><img ng-src="{{class.image}}" class="class-thumb"></td>
               <td><a href="http://yogainternational.com{{class.url}}">{{class.title}}</a></td>
               <td><a href="http://yogainternational.com/profile/{{class.authorId}}">{{class.author}}</a></td>
