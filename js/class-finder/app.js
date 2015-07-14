@@ -2,12 +2,9 @@
     TODO: 
 
         # of results for each option
-        
-        elastic dropdowns
 
         modularize under js/class-finder
 */
-
 
 var classFinder = angular.module('classFinder', ['ui.bootstrap']);
 
@@ -18,6 +15,9 @@ classFinder.controller('SearchCtrl', ['$scope', '$http', function (scope, http) 
     */
     scope.classes = classes;
 
+    scope.filterResults;
+
+    // Initial value prior to dynamic population of menuOptions.
     scope.dropdowns = [
                         {name:'Duration',   menuOptions:[]},
                         {name:'Level',      menuOptions:[]},
@@ -32,8 +32,8 @@ classFinder.controller('SearchCtrl', ['$scope', '$http', function (scope, http) 
                         Focus:     []
                       };
 
-    // TODO: move into an init function
-    scope.populateDropdownMenuOptions = function () {
+    scope.populateDropdownMenuOptions = function (listOfClasses) {
+        // console.log('beginning menu population with: ', listOfClasses);
         function mapDropdownToClasses(nameInDropdown, nameInClasses, classObj) {
             for (var i = 0; i < scope.dropdowns.length; i++) {
                 if (scope.dropdowns[i].name === nameInDropdown) {
@@ -41,35 +41,49 @@ classFinder.controller('SearchCtrl', ['$scope', '$http', function (scope, http) 
                 }
             }
         }
-        // Get all values 
-        for (var i = 0; i < scope.classes.length; i++) {
-            mapDropdownToClasses ('Duration',   'duration', scope.classes[i]);
-            mapDropdownToClasses ('Level',      'level',    scope.classes[i]);
-            mapDropdownToClasses ('Instructor', 'author',   scope.classes[i]);
-            mapDropdownToClasses ('Focus',      'focus',    scope.classes[i]);
+
+        // Empty dropdown menus
+        for (var i = 0; i < scope.dropdowns.length; i++) {
+            scope.dropdowns[i].menuOptions = [];
+        }
+
+        // Get all possible values 
+        for (var i = 0; i < listOfClasses.length; i++) {
+            mapDropdownToClasses ('Duration',   'duration', listOfClasses[i]);
+            mapDropdownToClasses ('Level',      'level',    listOfClasses[i]);
+            mapDropdownToClasses ('Instructor', 'author',   listOfClasses[i]);
+            mapDropdownToClasses ('Focus',      'focus',    listOfClasses[i]);
         }
         // Remove duplicates
         for (var j = 0; j < scope.dropdowns.length; j++) {
-            scope.dropdowns[j].menuOptions = _.uniq(scope.dropdowns[j].menuOptions)
+            scope.dropdowns[j].menuOptions = _.uniq(scope.dropdowns[j].menuOptions);
         }
     }
-    scope.populateDropdownMenuOptions();
 
+    // TODO: refactor this so that it fires on some reliable event, not just 100ms.
+    scope.repopulateDropdowns = function () {
+        setTimeout( function() {
+            scope.populateDropdownMenuOptions(scope.filterResults);
+        }, 100); 
+    }
 
     scope.addFilter = function (filter, category) {
         // Don't add the filter if it already exists
         if ( scope.activeFilters[category].indexOf(filter) === -1 ) {
             scope.activeFilters[category].push(filter);
         }
+        scope.repopulateDropdowns();
     };
     scope.removeFilter = function (index, category) {
         scope.activeFilters[category].splice(index,1);
+        scope.repopulateDropdowns();
     };
     scope.resetFilters = function () {
         // Delete all active filters
         for (var prop in scope.activeFilters) {
             scope.activeFilters[prop] = [];
         }
+        scope.repopulateDropdowns();
     }
 
     // Custom filter, checking only .title & .author properties.
@@ -98,7 +112,7 @@ classFinder.controller('SearchCtrl', ['$scope', '$http', function (scope, http) 
         if  ( 
               hasValues(obj.duration, scope.activeFilters.Duration) &&
               hasValues(obj.level, scope.activeFilters.Level) &&
-              hasValues([obj.author], scope.activeFilters.Instructor) &&
+              hasValues([obj.author], scope.activeFilters.Instructor) && // note obj.author is not an array, and so must be cast into one
               hasValues(obj.focus, scope.activeFilters.Focus) 
             )
                 { return true;
@@ -107,4 +121,9 @@ classFinder.controller('SearchCtrl', ['$scope', '$http', function (scope, http) 
                   return false;
         }
     }
+
+    scope.init = function () {
+        scope.populateDropdownMenuOptions(scope.classes);
+    }
+    scope.init();
 }]);
