@@ -1,6 +1,5 @@
 /*
     TODO: 
-        dynamically generate filters (+ USE LOCAL STORAGE TO CACHE?cache to local storage w/ a time stamp, and if < 1 day elapsed, recreate )
 
         # of results for each option
         
@@ -20,20 +19,48 @@ classFinder.controller('SearchCtrl', ['$scope', '$http', function (scope, http) 
     scope.classes = classes;
 
     scope.dropdowns = [
-                        {name:'Duration',        menuOptions:['15-min','30-min','45-min','60-min','75-min','90-min']},
-                        {name:'Level',           menuOptions:['advanced','all-levels','beginners','intermediate','restorative']},
-                        {name:'Instructor',      menuOptions:['Shari Friedrichsen','Luke Ketterhagen']},
-                        {name:'Focus',           menuOptions:["deeper-dimensions", "prana-vayus", "calming", "gentle", "breath-and-pranayama", "core", "hip-opening", "twists", "vinyasa", "forward-bends", "strength", "back-support", "healing", "yoga-therapy-yoga-classes", "stress-relief", "energize", "backbends", "inversions", "arm-balances", "prenatal", "bandhas", "pm", "peak-pose", "for-men", "meditation-preparation", "for-women", "5-elements", "chakras-yoga-classes", "alignment", "ayurveda", "am"]}
+                        {name:'Duration',   menuOptions:[]},
+                        {name:'Level',      menuOptions:[]},
+                        {name:'Instructor', menuOptions:[]},
+                        {name:'Focus',      menuOptions:[]}
                       ];
-                      
-                      
 
     scope.activeFilters = {
-                            Duration:  [],
-                            Level:     [],
-                            Instructor:[],
-                            Focus:     []
-                          };
+                        Duration:  [],
+                        Level:     [],
+                        Instructor:[],
+                        Focus:     []
+                      };
+
+    // TODO: move into an init function
+    scope.populateDropdownMenuOptions = function () {
+        function mapDropdownToClasses(nameInDropdown, nameInClasses, classObj) {
+            for (var i = 0; i < scope.dropdowns.length; i++) {
+                if (scope.dropdowns[i].name === nameInDropdown) {
+                    scope.dropdowns[i].menuOptions = scope.dropdowns[i].menuOptions.concat(classObj[nameInClasses]);
+                }
+            }
+        }
+        // Get all values 
+        for (var i = 0; i < scope.classes.length; i++) {
+            mapDropdownToClasses ('Duration',   'duration', scope.classes[i]);
+            mapDropdownToClasses ('Level',      'level',    scope.classes[i]);
+            mapDropdownToClasses ('Instructor', 'author',   scope.classes[i]);
+            mapDropdownToClasses ('Focus',      'focus',    scope.classes[i]);
+        }
+
+        // Remove duplicates
+        for (var j = 0; j < scope.dropdowns.length; j++) {
+            scope.dropdowns[j].menuOptions = _.uniq(scope.dropdowns[j].menuOptions)
+        }
+        
+
+        console.log(scope.dropdowns);
+    }
+    scope.populateDropdownMenuOptions();
+
+
+
 
     scope.addFilter = function (filter, category) {
         // Don't add the filter if it already exists
