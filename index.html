@@ -29,7 +29,7 @@
     <nav>
   
       <!-- Class Search -->
-      <input ng-model="searchText" class="form-control" type="text" placeholder="Search classes" />
+      <input ng-model="searchText" id="class-search" class="form-control" type="text" placeholder="Search classes" />
 
       <!-- Filter Dropdown Menus -->
       <div ng-repeat="dropdown in dropdowns" class="btn-group" dropdown is-open="status.isopen">
@@ -37,10 +37,10 @@
             Find by {{dropdown.name}} <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
-          <li ng-repeat="option in dropdown.menuOptions">
-            <a ng-click="addFilter( option, dropdown.name )">
-              {{option}} 
-              <span class="filter-num-of-results">({{2}})</span>
+          <li ng-repeat="(key, value) in dropdown.menuOptions">
+            <a ng-click="addFilter( key, dropdown.name )">
+              {{key}} 
+              <span class="filter-num-of-results">({{value}})</span>
             </a>
           </li>
         </ul>
@@ -78,7 +78,6 @@
             </tr>
         </tbody>
     </table>
-    {{filterResults}}
 </body>
 
 </html>
