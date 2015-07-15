@@ -6,8 +6,9 @@ classFinder.controller('SearchCtrl', ['$scope', '$http', function (scope, http) 
     http.get('https://yogainternational.com/json/classes').success(function(data) { scope.classes = data; });
     */
     scope.classes = classes;
-    // TODO: rename this to resultsOfFilter so doesn't begin with verb
-    scope.filterResults;
+
+    // This property is defined in the HTML (Angular necessity), and will carry the current filtration results
+    // scope.filterResults;
 
     // Initial value prior to dynamic population of menuOptions.
     scope.dropdowns = [
@@ -54,9 +55,6 @@ classFinder.controller('SearchCtrl', ['$scope', '$http', function (scope, http) 
             mapDropdownToClasses('Instructor', 'author',   listOfClasses[i]);
             mapDropdownToClasses('Focus',      'focus',    listOfClasses[i]);
         }
-
-        console.log(scope.dropdowns);
-
     };
 
 
